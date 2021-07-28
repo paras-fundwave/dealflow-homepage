@@ -21,12 +21,13 @@ function Logs() {
   const [comments, setComments] = useState({});
 
   const authToken =
-    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc0ODM3MzEsImlhdCI6MTYyNzQ3NjUzMSwiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiI1MmMzZWMxZS1kMWNhLTRjYWUtYWQ4Zi0zNTlmZGY1ZGRjMTEiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.FFiHKowqKi19iKaYzq5-yW11hcSD4zztLyLiGWmjuDMFbGG85SR87dJ15aWnly21wpp7geSamGjWhJE6WQDk-yWOjaM8r_3p6U1EUvOiJ2AeseGQXcuGnYZzYnM4dLfV6TvxIfwW-6upZJz3cETe5j-XNyg_1J05wQrqgCa7Vw8nFjcuJRmFm4ZTUZ_SiUSeE7MVD4WoiOvqxrAR7oCwRCt5g81_jyk_fAHT7mUSOQ0iLfLBgHAEaJbHqO-NNkicqh9IymUUGI6UGDErTKrrG36aYQBidgunuwgw61QzQspw27vTgSFF7grSjKM3zaors9exsn5t3sQeRCnNDRjRXA";
+    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc1MDA0ODYsImlhdCI6MTYyNzQ5MzI4NiwiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiIyYzhlMWVlMC0wMTc4LTQ0OTItYmRjMS1iNmFkODNlYTZiOGEiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.KnO5xToZ3nKgktB5Anor3F81UtBi7PTLB_Tfr7i967xc23Hwe1N2VDqufPuPp8yCry0Iv4h4Nec5wbyCx4UjqzUPjP0tPefdwLI_7_9X4HCw8Z_fedFIFlA5ffrxtz0AU7wTkY1LyU4iH47g33Bcc8yxotSiNbe074_i3f4oRjqOQDKzqNvURZPf_fGnpvro70rVD8j9C0okdA9_eeQG3JTlquWeH1in206cRdrqSLjVmTKAAoYnaF31uafFaDBGgsn6UHMiAG_uTgoos8kU7T68SSJ-LSJqMkmQWDqLWYiJ4SM9_PcykuTm2DCDaXKI2kyNGgUzIZ7xU9U_FHkPTQ";
 
   const url = "http://localhost:8080/filteredLogs";
   // "https://europe-west1-fw-microservices.cloudfunctions.net/activity-service-js/filteredLogs";
 
   async function fetchComments(activityId) {
+    console.trace("fetching data", { loading });
     await fetch("http://localhost:9000/fetchComments", {
       method: "POST",
       headers: {
@@ -40,10 +41,9 @@ function Logs() {
         return res.json();
       })
       .then((data) => {
-        setComments([]);
+        setLoading(false);
         if (data.length > 0)
           setComments((prevState) => {
-            // console.log(activityId);
             if (prevState[activityId])
               return {
                 ...prevState,
@@ -59,14 +59,25 @@ function Logs() {
   }
 
   useEffect(() => {
-    let activityCards = document.querySelectorAll("#log-grid activity-log");
-    activityCards.forEach((ele) => {
-      ele.addEventListener("fetch-comments", (data) => {
-        let { activityId, count, visible } = data.detail;
-        console.log(count, visible);
-        if (count > 0 && visible === "false") fetchComments(activityId);
-      });
+    console.log("wtf");
+    let activityCards = document.querySelector("#log-grid");
+    activityCards.addEventListener("fetch-comments", (data) => {
+      let { activityId, count, visible } = data.detail;
+      // console.log({ count, visible, loading });
+      // console.log(count && visible === "false" && loading === false);
+      if (count && visible === "false" && loading === false) {
+        setLoading(true);
+        fetchComments(activityId);
+      }
     });
+    // let activityCards = document.querySelectorAll("#log-grid activity-log");
+    // activityCards.forEach((ele) => {
+    //   ele.addEventListener("fetch-comments", (data) => {
+    //     let { activityId, count, visible } = data.detail;
+    //     console.log(count, visible);
+    //     if (count > 0 && visible === "false") fetchComments(activityId);
+    //   });
+    // });
 
     // return function cleanup() {
     //   let activityCards = document.querySelectorAll("#log-grid activity-log");
@@ -76,7 +87,7 @@ function Logs() {
     //     );
     //   });
     // };
-  });
+  }, []);
 
   useEffect(() => {
     setActivities([]);
@@ -162,10 +173,6 @@ function Logs() {
     [loading, hasMore]
   );
 
-  function logData(params) {
-    console.log("params");
-  }
-
   return (
     <main className="LogComponent">
       <header className="page-header">
@@ -201,7 +208,6 @@ function Logs() {
               title={activity.title}
               count={activity.commentCount}
               comments={JSON.stringify(comments[activity._id])}
-              authToken={authToken}
               commentVisible={false}
               visible={false}
               displayImage={`https://ui-avatars.com/api/?name=${
