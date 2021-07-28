@@ -21,7 +21,7 @@ function Logs() {
   const [comments, setComments] = useState({});
 
   const authToken =
-    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc0NzU3MTMsImlhdCI6MTYyNzQ2ODUxMywiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiJjY2FmOGFjNy1lMjIzLTRmZmYtOTc4Yi0wYjdkZWJjNWVkOWEiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.ENekN874FebNkNuUzypXIhfxbrj_Xxj2bhxnRJxzSNKqnUEuCfAqOPQ5rbHdlRA99p9MRC37K8LDvKzyZd_XmPP4t6Y_JZx7GZFSsZHHVtWkncCBW23Rl0DIUdtCcPdgE4oZu5x4Mme3iHAFczE96AeFP1TrUvQFJIUI1ma0SU-2WHjmNaBiIsRCvbqGeS3aLc7_ii7CQ-L-1J0EIJ5pJj-s70SibYw4ztZ2vxtlK19v8qZqQqaI4jWYuNxloe62YWid9-2Vshz8bMnQUsUz36hbLMA9fvV6LfSsjHbavb2JuixfGdHSLLfrPuyns9uEa9yr1Pss3K0UXJs58DtvBg";
+    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc0ODM3MzEsImlhdCI6MTYyNzQ3NjUzMSwiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiI1MmMzZWMxZS1kMWNhLTRjYWUtYWQ4Zi0zNTlmZGY1ZGRjMTEiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.FFiHKowqKi19iKaYzq5-yW11hcSD4zztLyLiGWmjuDMFbGG85SR87dJ15aWnly21wpp7geSamGjWhJE6WQDk-yWOjaM8r_3p6U1EUvOiJ2AeseGQXcuGnYZzYnM4dLfV6TvxIfwW-6upZJz3cETe5j-XNyg_1J05wQrqgCa7Vw8nFjcuJRmFm4ZTUZ_SiUSeE7MVD4WoiOvqxrAR7oCwRCt5g81_jyk_fAHT7mUSOQ0iLfLBgHAEaJbHqO-NNkicqh9IymUUGI6UGDErTKrrG36aYQBidgunuwgw61QzQspw27vTgSFF7grSjKM3zaors9exsn5t3sQeRCnNDRjRXA";
 
   const url = "http://localhost:8080/filteredLogs";
   // "https://europe-west1-fw-microservices.cloudfunctions.net/activity-service-js/filteredLogs";
@@ -181,15 +181,11 @@ function Logs() {
           />
         }
       </header>
+
       <div id="log-grid">
         {activities.map((activity, index) => {
-          // console.log(userData);
-          // console.log(comments, activity._id);
-          // console.log(comments[activity._id]);
           return (
-            // <Card style={{ marginBottom: "20px" }}>
             <activity-log
-              logData={logData}
               ref={activities.length === index + 1 ? lastActivityRef : null}
               key={index}
               actor={userData[activity.userId].name}
@@ -204,7 +200,7 @@ function Logs() {
               comment={activity.comment}
               title={activity.title}
               count={activity.commentCount}
-              comments={comments[activity._id]}
+              comments={JSON.stringify(comments[activity._id])}
               authToken={authToken}
               commentVisible={false}
               visible={false}
@@ -213,7 +209,6 @@ function Logs() {
               }&size=38&background=444&color=fff`}
               level="home"
             ></activity-log>
-            // </Card>
           );
         })}
         <span style={{ textAlign: "center", width: "100%" }}>
