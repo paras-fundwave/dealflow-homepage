@@ -1,4 +1,4 @@
-const userData = {
+const memberData = {
   "5dd3d91008d79b1b0bc26389": {
     _id: "5dd3d91008d79b1b0bc26389",
     name: "Harsha Goel",
@@ -56,7 +56,7 @@ const userData = {
   },
 };
 
-let userFilterData = Object.values(userData);
+const memberFilterData = Object.values(memberData);
 
 const teamData = [
   {
@@ -89,7 +89,7 @@ const teamData = [
   },
 ];
 
-let teamFilterData = [];
+const teamFilterData = [];
 teamData.forEach((data) => {
   let teamInfo = {};
   data.teams.forEach((team) => {
@@ -101,4 +101,12 @@ teamData.forEach((data) => {
   });
 });
 
-export { userData, userFilterData, teamFilterData };
+const userData = {
+  accountStatus: "activated",
+  _id: "60bf8e1502cb4635fb5cad17",
+  email: "paras@getfundwave.com",
+  username: "paras@getfundwave.com",
+  name: "Paras Verma",
+};
+
+export { userData, memberData, memberFilterData, teamFilterData };
