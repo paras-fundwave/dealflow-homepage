@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import { userData, memberData } from "./data";
 import "../Styles/LogComponent.scss";
-import "@fundwave/activity-component/src/logCard.js";
 import ActivityFilter from "./ActivityFilter";
-import { userData } from "./dealdata";
+import ActivityLogs from "./ActivityLogs";
 
 function Logs() {
   // for fetch req and pagination
@@ -15,19 +15,21 @@ function Logs() {
 
   // for filters
   const [teamFilters, setTeamFilters] = useState([]);
-  const [userFilters, setUserFilters] = useState([]);
+  const [memberFilters, setMemberFilters] = useState([]);
 
   // for Cards
-  const [comments, setComments] = useState({});
+  const [commentData, setComments] = useState({});
 
   const authToken =
-    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc1MDc3MzYsImlhdCI6MTYyNzUwMDUzNiwiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiI1ZTM2YTExMC03YzU4LTQxMzQtOGMxYS04M2I5NjYwMzNlYzMiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.v0MuDwACtidotPyS0uGIeLthjFuRZf8zpTA_AaWZvFNaJUxWTPQRE9S1OnxFGC-EuJWEQ_jGS34BLFqWQysBc0DV8qHZaNJenF7bYRsm7O1nAPPremYS7PdQE39J4vPj0bh-lkqfrdp8dSo6nVNGNEzB0cCqJv23M1DFfMd6fzcHGL-lPrdTfDxHoOxDOhh4Ln5yZs_edn6uczCqAIzB2yb0cBsHK4Tq7jKSaunJnwSM77cYLJMoWO43dQb13l251St9jt00Asswj8e7C7FoDDloeGQoCFv36Z7exUZ7Q8fvwChe2aAZRh2XNjz-VO8kidLmKy8bQje18DLXO4j_aQ";
+    "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJlRXV1UFlGbDRPTlJJZGc4OHpBaC1XNDl4NGZMdkJDQ1llZUoxVnBtVjZZIn0.eyJleHAiOjE2Mjc5ODI4NzQsImlhdCI6MTYyNzk3NTY3NCwiYXV0aF90aW1lIjoxNjI2NzU5NjU2LCJqdGkiOiI4YjMwYmVlYy1lMmJlLTRiNjgtYmI3Mi04MTAxNTQ5YjcwMzgiLCJpc3MiOiJodHRwczovL2lkLmZ1bmR3YXZlLmNvbS9hdXRoL3JlYWxtcy9zYW5kYm94IiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjEzN2E3OGI1LWI1ZmMtNDc3Mi04ZTNiLTZiNmE0ZGI1YWQyYiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImRlYWxmbG93LWFwcCIsInNlc3Npb25fc3RhdGUiOiI0MDE0YzY5ZC03MmY5LTQ5NDktOTY3OS1iOGE2MWM0MTM1ZTkiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJQYXJhcyBWZXJtYSIsInByZWZlcnJlZF91c2VybmFtZSI6InBhcmFzQGdldGZ1bmR3YXZlLmNvbSIsImdpdmVuX25hbWUiOiJQYXJhcyBWZXJtYSIsImVtYWlsIjoicGFyYXNAZ2V0ZnVuZHdhdmUuY29tIn0.ECksc68ugniq27pRztdW1eg6LZ93eaOVhYuZsHtTuiFrVDZOoC7pr-zdEKt5txknw0un-AbzQjtg4_W3iCzJIPCV88WIkvieWNly_g-DvNf1ZhyxADPX3O7prOuRg8ZR-lpKazjyvdXE5zjdwRJOIrR9VJZIfdZVtt5gm_CApi7SRuwrsTddSdco9F6P8MpGpe8pQ27p8oeyl6UWnRaffwB6Fy86OT36fA3bm_QEm1SOFfhwgTwwCgymAQI3_5LHISTqQ5X0TcC_Fd78QxCewrrznQP2KXVAvlEmZMD2mfKH0NGYf79rJBHAD9ra04Oj_TX4m4kr4JwGCyJtoNDTmQ";
 
   const url = "http://localhost:8080/filteredLogs";
   // "https://europe-west1-fw-microservices.cloudfunctions.net/activity-service-js/filteredLogs";
 
+  const logGrid = useRef(null);
+
+  // Functionality for comments under an activity
   async function fetchComments(activityId) {
-    // console.trace("fetching data", { loading });
     await fetch("http://localhost:9000/fetchComments", {
       method: "POST",
       headers: {
@@ -58,7 +60,6 @@ function Logs() {
   }
 
   async function sendComment(activityId, comment) {
-    console.log(activityId, comment);
     await fetch("http://localhost:9000/addComment", {
       method: "POST",
       headers: {
@@ -76,55 +77,144 @@ function Logs() {
       })
       .then((data) => {
         setComments((prevState) => {
-          if (prevState[activityId])
+          if (prevState[activityId]) {
             return {
               ...prevState,
               [activityId]: [...prevState[activityId], data],
             };
-          else
+          } else {
             return {
               ...prevState,
               [activityId]: [data],
             };
+          }
+        });
+        setActivities((prevState) => {
+          let newActivites = prevState.map((log) => {
+            if (log._id === activityId) log.commentCount++;
+            return log;
+          });
+          return [...newActivites];
         });
       });
   }
 
-  useEffect(() => {
-    let activityCards = document.querySelector("#log-grid");
-    activityCards.addEventListener("fetch-comments", (data) => {
-      let { activityId, count, visible } = data.detail;
-      if (count && visible === "false") {
-        fetchComments(activityId);
-      }
-    });
+  async function deleteComment(commentId) {
+    await fetch("http://localhost:9000/deleteComment", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+        product: "DEALFLOW",
+        commentId,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setComments((prevState) => {
+          return {
+            ...prevState,
+            [data.activityId]: prevState[data.activityId].filter(
+              (comm) => comm._id !== data._id
+            ),
+          };
+        });
+        setActivities((prevState) => {
+          let newActivites = prevState.map((log) => {
+            if (log._id === data.activityId) log.commentCount--;
+            return log;
+          });
+          return [...newActivites];
+        });
+      });
+  }
 
-    activityCards.addEventListener("send-comments", (data) => {
-      let { activityId, comment } = data.detail;
-      sendComment(activityId, comment);
-    });
+  async function updateComment(commentId, comment) {
+    console.log(commentId);
+    await fetch("http://localhost:9000/updateComment", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        "Content-Type": "application/json",
+        product: "DEALFLOW",
+        commentId,
+      },
+      body: JSON.stringify({
+        comment,
+      }),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setComments((prevState) => {
+          return {
+            ...prevState,
+            [data.activityId]: prevState[data.activityId].map((comm) =>
+              comm._id === data._id ? data : comm
+            ),
+          };
+        });
+      });
+  }
+
+  // Event Listners for events triggered by Lit Component on crud comments
+  useEffect(() => {
+    if (logGrid && logGrid.current) {
+      logGrid.current.addEventListener("fetch-comments", (data) => {
+        let { activityId, count, visible } = data.detail;
+        if (count && visible === "false") {
+          fetchComments(activityId);
+        }
+      });
+
+      logGrid.current.addEventListener("send-comment", (data) => {
+        let { activityId, comment } = data.detail;
+        sendComment(activityId, comment);
+      });
+
+      logGrid.current.addEventListener("delete-comment", (data) => {
+        let { commentId } = data.detail;
+        console.log(commentId);
+        deleteComment(commentId);
+      });
+
+      logGrid.current.addEventListener("update-comment", (data) => {
+        let { commentId, comment } = data.detail;
+        updateComment(commentId, comment);
+      });
+    }
   }, []);
 
+  // triggered on filters are changed
   useEffect(() => {
+    console.log("this shlou happen");
     setActivities([]);
     setComments({});
-    fetchData(
-      pageNum,
-      pageSize,
-      authToken,
-      teamFilters.map((data) => data.Id),
-      userFilters.map((data) => data._id)
-    );
+    if (pageNum > 1) {
+      setPageNum(1);
+    } else {
+      fetchData(
+        pageNum,
+        pageSize,
+        authToken,
+        teamFilters.map((data) => data.Id),
+        memberFilters.map((data) => data._id)
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamFilters, userFilters]);
+  }, [teamFilters, memberFilters]);
 
+  // triggered on pagination and filter updation
   useEffect(() => {
     fetchData(
       pageNum,
       pageSize,
       authToken,
       teamFilters.map((data) => data.Id),
-      userFilters.map((data) => data._id)
+      memberFilters.map((data) => data._id)
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
@@ -164,22 +254,27 @@ function Logs() {
         setLoading(false);
       })
       .catch((err) => {
-        // console.trace(err);
+        console.trace(err);
         setError(true);
         setLoading(false);
       });
   }
 
+  // For Pagination
+
   const observer = useRef();
 
+  // Observing the last element
   const lastActivityRef = useCallback(
     (node) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
+        // if the last activity is one screen
         if (entries[0].isIntersecting && hasMore) {
           setPageNum((prevPgNum) => {
+            // pageNum incremented
             return prevPgNum + 1;
           });
         }
@@ -196,50 +291,33 @@ function Logs() {
         <h2>
           <strong className="page-title">Activity Logs</strong>
         </h2>
-        {
-          <ActivityFilter
-            teamFilters={teamFilters}
-            setTeamFilters={setTeamFilters}
-            userFilters={userFilters}
-            setUserFilters={setUserFilters}
-          />
-        }
+        <ActivityFilter
+          teamFilters={teamFilters}
+          setTeamFilters={setTeamFilters}
+          memberFilters={memberFilters}
+          setMemberFilters={setMemberFilters}
+        />
       </header>
 
-      <div id="log-grid">
+      <div id="log-grid" ref={logGrid}>
         {activities.map((activity, index) => {
           return (
-            <activity-log
-              ref={activities.length === index + 1 ? lastActivityRef : null}
-              key={index}
-              actor={userData[activity.userId].name}
-              entityType={activity.entityType}
-              entityName={activity.entityName}
-              entityID={activity.entityID}
-              activityId={activity._id}
-              activityType={activity.type}
-              activityTime={activity.date}
-              teamName={activity.teamId}
-              teamId={activity.teamId}
-              comment={activity.comment}
-              title={activity.title}
-              count={activity.commentCount}
-              comments={JSON.stringify(comments[activity._id])}
-              commentVisible={false}
-              visible={false}
-              displayImage={`https://ui-avatars.com/api/?name=${
-                userData[activity.userId].name
-              }&size=38&background=444&color=fff`}
-              level="home"
-            ></activity-log>
+            <>
+              <ActivityLogs
+                key={index}
+                ref={activities.length === index + 1 ? lastActivityRef : null}
+                activity={activity}
+                userData={userData}
+                memberData={memberData}
+                comments={commentData}
+              />
+            </>
           );
         })}
       </div>
-      <span style={{ textAlign: "center", width: "100%" }}>
-        {loading && "Loading..."}
-        {error && "Error"}
-        {comments.length === 0 ? "No Logs Found" : ""}
-      </span>
+      <div style={{ textAlign: "center", width: "100%" }}>
+        {(loading && "Loading...") || (error && "Error")}
+      </div>
     </main>
   );
 }
