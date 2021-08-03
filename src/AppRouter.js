@@ -6,8 +6,8 @@ function AppRouter() {
   return (
     <Router>
       <Switch>
+        <Route path="/" exact component={Home} />
         <Route path="/:section" exact component={Home} />
-        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );

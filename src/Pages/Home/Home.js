@@ -1,28 +1,44 @@
-import { useLocation } from "react-router-dom";
+import { Hidden } from "@material-ui/core";
 import Dashboard from "../../Components/DashboardComponent";
 import Logs from "../../Components/Logs";
 import Sidebar from "../../Components/Sidebar";
 import "./Home.scss";
 
-function Home() {
-  let location = useLocation();
+function Home({ match }) {
   function setComponent() {
-    switch (location.pathname) {
-      case "/activities":
-        return <Logs />;
-      case "/dashboard":
-      case "/":
-        return <Dashboard />;
-      default:
-        return <div>404</div>;
-    }
+    if (!match.params.section)
+      return (
+        <>
+          <Sidebar className="sidebar" highlight={match.params.section} />
+          <Dashboard />
+        </>
+      );
+    else
+      switch (match.params.section) {
+        case "activities":
+          return (
+            <>
+              <Hidden smDown>
+                <Sidebar className="sidebar" highlight={match.params.section} />
+              </Hidden>
+              <Logs />
+            </>
+          );
+        case "dashboard":
+          return (
+            <>
+              <Hidden smDown>
+                <Sidebar className="sidebar" highlight={match.params.section} />
+              </Hidden>
+              <Dashboard />
+            </>
+          );
+        default:
+          return <div style={{ textAlign: "center", width: "100%" }}>404</div>;
+      }
   }
-  return (
-    <div className="home-comp">
-      <Sidebar className="sidebar" highlight={location.pathname} />
-      {setComponent()}
-    </div>
-  );
+
+  return <div className="home-comp">{setComponent()}</div>;
 }
 
 export default Home;
